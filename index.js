@@ -5,6 +5,9 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = process.env.TELEGRAM_API_TOKEN
 const bot = new TelegramBot(token, {polling: true});
 
+const user1 = process.env.USER1
+const user2 = process.env.USER2
+
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
@@ -15,7 +18,21 @@ bot.on('message', async (msg) => {
     const fromId = msg.from.id;
     const isBot = msg.from.is_bot;
 
-    await bot.sendMessage(chatId, `Ты мне написал: "${text}"`)
+    //if (text.includes('http://'))
+
+    //обработка сообщений    
+    if ((text || '')[0] !== '/' && text) {
+
+        let text2 = text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
+        let retext = text2.replace(/(?:@)[\n\S]+/g, '');
+
+        if (chatId.toString() === user1) {
+            await bot.sendMessage(user2, retext)
+        } 
+        else if (chatId.toString() === user2) {
+            await bot.sendMessage(user1, retext)
+        }
+    }
 
 });
 
