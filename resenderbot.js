@@ -35,7 +35,7 @@ bot.on('message', async (msg) => {
 
     //обработка документов
     if (msg.document) {
-        const image = msg.document[0].file_id
+        const image = msg.document.file_id
         console.log(image)
 
         if (chatId.toString() === group1) {
