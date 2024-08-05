@@ -25,6 +25,25 @@ bot.on('message', async (msg) => {
 
     //console.log(msg)
 
+    //обработка документов
+    if (msg.document) {
+
+    }
+
+    //обработка изображений
+    if (msg.photo) {
+        console.log(msg.photo)
+        const image = await bot.getFile(msg.photo[msg.photo.length-1].file_id);
+
+        if (chatId.toString() === group1) {
+            await bot.sendPhoto(group2, image)
+        } 
+        else if (chatId.toString() === group2) {
+            await bot.sendPhoto(group2, image)
+        }
+
+    }
+
     //обработка сообщений    
     if ((text || '')[0] !== '/' && text) {
 
@@ -33,8 +52,7 @@ bot.on('message', async (msg) => {
 
         let conversation = []
 
-
-
+        
         if (chatId.toString() === group1) {
             await bot.sendMessage(group2, retext)
         } 
