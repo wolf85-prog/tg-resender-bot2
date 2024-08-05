@@ -18,7 +18,7 @@ bot.on('message', async (msg) => {
     const fromId = msg.from.id;
     const isBot = msg.from.is_bot;
 
-    //if (text.includes('http://'))
+    //if (text.includes('http://'))sfsdfsd
 
     //обработка сообщений    
     if ((text || '')[0] !== '/' && text) {
