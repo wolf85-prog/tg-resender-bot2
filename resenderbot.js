@@ -20,6 +20,8 @@ bot.on('message', async (msg) => {
 
     //if (text.includes('http://'))sfsdfsdzczxczx
 
+    console.log(fromId + ': ' + text)
+
     //обработка сообщений    
     if ((text || '')[0] !== '/' && text) {
 
