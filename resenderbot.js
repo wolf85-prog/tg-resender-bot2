@@ -62,6 +62,18 @@ bot.on('message', async (msg) => {
 
     }
 
+    //обработка аудио сообщений
+    if (msg.voice) {
+        const voice = msg.voice.file_id
+
+        if (chatId.toString() === group1) {
+            await bot.sendVoice(group2, voice)
+        } 
+        else if (chatId.toString() === group2) {
+            await bot.sendVoice(group2, voice)
+        }
+    }
+
     //обработка сообщений    
     if ((text || '')[0] !== '/' && text) {
 
