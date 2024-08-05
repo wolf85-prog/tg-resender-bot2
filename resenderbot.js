@@ -9,7 +9,7 @@ const user1 = process.env.USER1
 const user2 = process.env.USER2
 
 const group1 = process.env.GROUP1
-const group2 = process.env.GROUP1
+const group2 = process.env.GROUP2
 
 
 bot.on('message', async (msg) => {
