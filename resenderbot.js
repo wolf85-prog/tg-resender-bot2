@@ -33,7 +33,9 @@ bot.on('message', async (msg) => {
     //обработка изображений
     if (msg.photo) {
         console.log(msg.photo)
-        const image = await bot.getFile(msg.photo[msg.photo.length-1].file_id);
+        //const image = await bot.getFile(msg.photo[msg.photo.length-1].file_id);
+        const image = msg.photo[0].file_id
+        console.log(image)
 
         if (chatId.toString() === group1) {
             await bot.sendPhoto(group2, image)
