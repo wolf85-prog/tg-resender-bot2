@@ -11,8 +11,8 @@ const user2 = process.env.USER2
 //const group1 = process.env.GROUP1
 //const group2 = process.env.GROUP2
 
-let group1 = -4249083059 
-let group2 = -4271241131
+let group1 = '-4249083059' 
+let group2 = '-4271241131'
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
