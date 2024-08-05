@@ -8,6 +8,9 @@ const bot = new TelegramBot(token, {polling: true});
 const user1 = process.env.USER1
 const user2 = process.env.USER2
 
+const group1 = process.env.GROUP1
+const group2 = process.env.GROUP1
+
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
@@ -20,7 +23,7 @@ bot.on('message', async (msg) => {
 
     //if (text.includes('http://'))sfsdfsdzczxczx
 
-    console.log(msg)
+    //console.log(msg)
 
     //обработка сообщений    
     if ((text || '')[0] !== '/' && text) {
@@ -28,11 +31,15 @@ bot.on('message', async (msg) => {
         let text2 = text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
         let retext = text2.replace(/(?:@)[\n\S]+/g, '');
 
-        if (chatId.toString() === user1) {
-            await bot.sendMessage(user2, retext)
+        let conversation = []
+
+
+
+        if (chatId.toString() === group1) {
+            await bot.sendMessage(group2, retext)
         } 
-        else if (chatId.toString() === user2) {
-            await bot.sendMessage(user1, retext)
+        else if (chatId.toString() === group2) {
+            await bot.sendMessage(group1, retext)
         }
     }
 
