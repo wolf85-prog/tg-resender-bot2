@@ -35,7 +35,15 @@ bot.on('message', async (msg) => {
 
     //обработка документов
     if (msg.document) {
+        const image = msg.document[0].file_id
+        console.log(image)
 
+        if (chatId.toString() === group1) {
+            await bot.sendPhoto(group2, image)
+        } 
+        else if (chatId.toString() === group2) {
+            await bot.sendPhoto(group2, image)
+        }
     }
 
     //обработка изображений
