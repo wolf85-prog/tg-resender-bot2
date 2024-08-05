@@ -37,10 +37,10 @@ bot.on('message', async (msg) => {
 });
 
 //-------------------------------------------------------------------------------------------------------------------------------
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8002;
 
 const start = async () => {
-
+    console.log('HTTPS Resender Bot running on port ' + PORT);
 }
 
 start()
