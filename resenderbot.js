@@ -23,7 +23,7 @@ bot.on('message', async (msg) => {
 
     //if (text.includes('http://'))sfsdfsdzczxczx
 
-    //console.log(msg)
+    console.log(msg)
 
     //обработка документов
     if (msg.document) {
