@@ -8,9 +8,11 @@ const bot = new TelegramBot(token, {polling: true});
 const user1 = process.env.USER1
 const user2 = process.env.USER2
 
-const group1 = process.env.GROUP1
-const group2 = process.env.GROUP2
+//const group1 = process.env.GROUP1
+//const group2 = process.env.GROUP2
 
+let group1 = -4249083059 
+let group2 = -4271241131
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
@@ -29,8 +31,13 @@ bot.on('message', async (msg) => {
         console.log('/start')
     }
 
-    if (text === '/старт') {
-        console.log('/старт')
+    if (text === 'тест2') {
+        console.log('тест2')
+        if (group1.length === 0) {
+            group1 = chatId
+        } else {
+            group2 = chatId
+        }
     }
 
     //обработка документов
