@@ -39,10 +39,10 @@ bot.on('message', async (msg) => {
         console.log(image)
 
         if (chatId.toString() === group1) {
-            await bot.sendPhoto(group2, image)
+            await bot.sendDocument(group2, image)
         } 
         else if (chatId.toString() === group2) {
-            await bot.sendPhoto(group2, image)
+            await bot.sendDocument(group2, image)
         }
     }
 
