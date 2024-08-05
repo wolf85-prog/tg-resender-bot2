@@ -49,7 +49,7 @@ bot.on('message', async (msg) => {
             await bot.sendDocument(group2, image)
         } 
         else if (chatId.toString() === group2) {
-            await bot.sendDocument(group2, image)
+            await bot.sendDocument(group1, image)
         }
     }
 
@@ -64,7 +64,7 @@ bot.on('message', async (msg) => {
             await bot.sendPhoto(group2, image)
         } 
         else if (chatId.toString() === group2) {
-            await bot.sendPhoto(group2, image)
+            await bot.sendPhoto(group1, image)
         }
 
     }
@@ -77,7 +77,7 @@ bot.on('message', async (msg) => {
             await bot.sendVoice(group2, voice)
         } 
         else if (chatId.toString() === group2) {
-            await bot.sendVoice(group2, voice)
+            await bot.sendVoice(group1, voice)
         }
     }
 
