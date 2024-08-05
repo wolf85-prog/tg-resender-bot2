@@ -25,6 +25,14 @@ bot.on('message', async (msg) => {
 
     console.log(msg)
 
+    if (text === '/start') {
+        console.log('/start')
+    }
+
+    if (text === '/старт') {
+        console.log('/старт')
+    }
+
     //обработка документов
     if (msg.document) {
 
