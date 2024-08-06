@@ -5,8 +5,8 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = process.env.TELEGRAM_API_TOKEN
 const bot = new TelegramBot(token, {polling: true});
 
-const user1 = process.env.USER1
-const user2 = process.env.USER2
+const user1 = process.env.GROUP12
+const user2 = process.env.GROUP22
 
 const group1 = process.env.GROUP1
 const group2 = process.env.GROUP2
