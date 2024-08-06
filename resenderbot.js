@@ -115,8 +115,8 @@ bot.on('message', async (msg) => {
     //обработка сообщений    
     if ((text || '')[0] !== '/' && text) {
 
-        //let text2 = text.replace(/(?:https?):\/\/t.me[\n\S]+/g, '');
-        let retext = text.replace(/(?:@)[\n\S]+/g, 'BitWire Support');
+        let text2 = text.replace(/(?:https?):\/\/t.me[\n\S]+/g, '');
+        let retext = text2.replace(/(?:@)[\n\S]+/g, 'BitWire Support');
 
         //1,2
         if (chatId.toString() === group1) {
