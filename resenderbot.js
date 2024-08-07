@@ -9,6 +9,19 @@ const bot = new TelegramBot(token, {polling: true});
 const sequelize = require('./connections/db')
 const {UserBot, Message, Conversation} = require('./models/models');
 
+const express = require('express');
+const router = require('./routes/index')
+const cors = require('cors');
+const https = require('https');
+
+const app = express();
+
+app.use(express.json());
+app.use(cors());
+app.use(express.static('tg-worker-bot'));
+app.use(express.static(path.resolve(__dirname, 'static')))
+app.use('/api', router);
+
 const user1 = process.env.GROUP12
 const user2 = process.env.GROUP22
 
@@ -190,6 +203,11 @@ const start = async () => {
     try {
         await sequelize.authenticate()
         await sequelize.sync()
+
+        app.listen(PORT, () => {
+            console.log('Server Resender Bot running on port', PORT);
+        });
+
 
     } catch (error) {
         console.log("Подключение сломалось: ", error)
