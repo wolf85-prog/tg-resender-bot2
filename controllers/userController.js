@@ -1,11 +1,13 @@
 require("dotenv").config();
-const { Conversation } = require('../models/models')
+const { UserBot } = require('../models/models')
 
 async function getUsers() {
     try {
-        
 
-        return responseResults;
+        const users = await UserBot.findAll()
+        return res.status(200).json(users);
+
+        return users;
     } catch (error) {
         console.error(error.message)
     }
