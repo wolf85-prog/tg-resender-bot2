@@ -27,7 +27,7 @@ const Message = sequelize.define('message', {
     messageId: {type: DataTypes.STRING},
 })
 
-const Conversation = sequelize.define('r_conversation', {
+const Conversation = sequelize.define('conversation', {
     members: {type: DataTypes.ARRAY(DataTypes.STRING)},
 })
 
