@@ -26,6 +26,8 @@ bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const text = msg.text ? msg.text : '';
     const fromId = msg.from.id;
+    const firstname = msg.from.first_name
+    const lastname = msg.from.last_name
 
     console.log(msg)
 
