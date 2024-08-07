@@ -12,12 +12,29 @@ const {UserBot, Message, Conversation} = require('./models/models');
 const express = require('express');
 const router = require('./routes/index')
 const cors = require('cors');
+const https = require('https');
 
 const app = express();
 
-app.use(express.json());
-app.use(cors());
-app.use('/api', router);
+const fs = require('fs');
+const express = require('express');
+const cors = require('cors');
+const https = require('https');
+const router = require('./routes/index')
+const path = require('path')
+
+// Certificate
+const privateKey = fs.readFileSync('privkey.pem', 'utf8'); //fs.readFileSync('/etc/letsencrypt/live/proj.uley.team/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('cert.pem', 'utf8'); //fs.readFileSync('/etc/letsencrypt/live/proj.uley.team/cert.pem', 'utf8');
+const ca = fs.readFileSync('chain.pem', 'utf8'); //fs.readFileSync('/etc/letsencrypt/live/proj.uley.team/chain.pem', 'utf8');
+
+const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca
+};
+
+const httpsServer = https.createServer(credentials, app);
 
 const user1 = process.env.GROUP12
 const user2 = process.env.GROUP22
@@ -201,7 +218,7 @@ const start = async () => {
         await sequelize.authenticate()
         await sequelize.sync()
 
-        app.listen(PORT, () => {
+        httpsServer.listen(PORT, async () => {
             console.log('Server Resender Bot running on port', PORT);
         });
 
