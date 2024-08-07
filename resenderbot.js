@@ -13,15 +13,11 @@ const express = require('express');
 const router = require('./routes/index')
 const cors = require('cors');
 const https = require('https');
+const fs = require('fs');
+const path = require('path')
 
 const app = express();
 
-const fs = require('fs');
-const express = require('express');
-const cors = require('cors');
-const https = require('https');
-const router = require('./routes/index')
-const path = require('path')
 
 // Certificate
 const privateKey = fs.readFileSync('privkey.pem', 'utf8'); //fs.readFileSync('/etc/letsencrypt/live/proj.uley.team/privkey.pem', 'utf8');
