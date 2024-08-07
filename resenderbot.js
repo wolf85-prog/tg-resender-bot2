@@ -15,9 +15,12 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const path = require('path')
+const bodyParser = require("body-parser");
 
 const app = express();
 
+app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static('tg-resender-bot'));
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use('/api', router)
