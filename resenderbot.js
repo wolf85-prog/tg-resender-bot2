@@ -53,10 +53,12 @@ const group6 = process.env.GROUP6
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
+    const groupTitle = msg.chat.title
     const text = msg.text ? msg.text : '';
     const fromId = msg.from.id;
     const firstname = msg.from.first_name
     const lastname = msg.from.last_name
+    
 
     console.log(msg)
 
@@ -65,7 +67,13 @@ bot.on('message', async (msg) => {
             //добавить пользователя в бд
             const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
             if (!user) {
-                await UserBot.create({ firstname: firstname, lastname: lastname, chatId: chatId })
+                await UserBot.create({ 
+                    firstname: firstname, 
+                    lastname: lastname, 
+                    chatId: fromId, 
+                    group: groupTitle,
+                    groupId: chatId,  
+                })
                 console.log('Пользователь добавлен в БД')
             } else {
                 console.log('Отмена добавления в БД. Пользователь уже существует')
