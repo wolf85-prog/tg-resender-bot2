@@ -17,7 +17,7 @@ class ConversationController {
                     } 
                 },
             }) 
-            if (exist.length !== 0) {
+            if (exist && exist.length !== 0) {
                 return res.status(200).json(`conversation already exist`);
             }
 
