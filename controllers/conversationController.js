@@ -6,6 +6,7 @@ class ConversationController {
     //создать беседу
     async newConversation(req, res) {        
         try {
+            console.log(req.body)
             const {senderId, receiverId} = req.body
 
             //найти беседу
