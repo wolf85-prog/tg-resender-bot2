@@ -7,3 +7,5 @@ const conversationController = require('../controllers/conversationController')
 
 // get USERS  
 router.get("/users", userController.users);
+
+module.exports = router
