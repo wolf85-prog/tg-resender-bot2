@@ -7,6 +7,7 @@ const bot = new TelegramBot(token, {polling: true});
 
 //подключение к БД PostreSQL
 const sequelize = require('./connections/db')
+const { Op } = require('sequelize')
 const {UserBot, Message, Conversation} = require('./models/models');
 
 const express = require('express');
@@ -181,8 +182,30 @@ bot.on('message', async (msg) => {
                 console.log('Отмена добавления в БД. Пользователь уже существует')
             }
 
+            
             let text2 = text.replace(/(?:https?):\/\/t.me[\n\S]+/g, '');
             let retext = text2.replace(/(?:@)[\n\S]+/g, 'BitWire Support');
+
+            //найти беседу
+            const exist = await Conversation.findOne({
+                where: { 
+                    members: {
+                        [Op.contains]: [chatId]
+                    } 
+                },
+            }) 
+
+            //test
+            if (exist && exist.length !== 0) {
+                console.log('conversation already exist', exist.dataValues.members[0])
+
+                if (chatId.toString() === exist.dataValues.members[0].senderId) {
+                    await bot.sendMessage(exist.dataValues.members[0].receiverId, retext)
+                } else if (chatId.toString() === exist.dataValues.members[0].receiverId) {
+                    await bot.sendMessage(exist.dataValues.members[0].senderId, retext)
+                }
+            }
+            
 
             //1,2
             if (chatId.toString() === group1) {
@@ -209,12 +232,12 @@ bot.on('message', async (msg) => {
             }
 
             //test
-            if (chatId.toString() === user1) {
-                await bot.sendMessage(user2, retext)
-            } 
-            else if (chatId.toString() === user2) {
-                await bot.sendMessage(user1, retext)
-            }
+            // if (chatId.toString() === user1) {
+            //     await bot.sendMessage(user2, retext)
+            // } 
+            // else if (chatId.toString() === user2) {
+            //     await bot.sendMessage(user1, retext)
+            // }
         }
     } catch (error) {
         console.log('Произошла непредвиденная ошибка в боте Resender! ', error.message)
