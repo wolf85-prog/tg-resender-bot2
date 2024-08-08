@@ -190,7 +190,7 @@ bot.on('message', async (msg) => {
             const exist = await Conversation.findOne({
                 where: { 
                     members: {
-                        [Op.contains]: [chatId]
+                        [Op.contains]: [chatId.toString()]
                     } 
                 },
             }) 
