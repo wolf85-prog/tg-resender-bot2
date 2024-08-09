@@ -237,14 +237,16 @@ bot.on('message', async (msg) => {
 
             //test
             if (chatId.toString() === user1) {
-                await bot.sendMessage(user2, retext)
+                const response = await bot.sendMessage(user2, retext)
+                console.log(response)
                 //сохранить сообщение в базе данных
-                const convId = await sendMyMessage(text, "text", fromId, chatId, parseInt(response.message_id)-1)
+                const convId = await sendMyMessage(text, "text", fromId, chatId, parseInt(response.message_id))
             } 
             else if (chatId.toString() === user2) {
-                await bot.sendMessage(user1, retext)
+                const response = await bot.sendMessage(user1, retext)
+                console.log(response)
                 //сохранить сообщение в базе данных
-                const convId = await sendMyMessage(text, "text", fromId, chatId, parseInt(response.message_id)-1)
+                const convId = await sendMyMessage(text, "text", fromId, chatId, parseInt(response.message_id))
             }
         }
     } catch (error) {
