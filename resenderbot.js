@@ -63,7 +63,7 @@ bot.on('message', async (msg) => {
     const fromId = msg.from ? msg.from.id : '';
     const firstname = msg.from.first_name
     const lastname = msg.from.last_name
-    const replyId = msg.reply_to_message.message_id;
+    const replyId = msg.reply_to_message ? msg.reply_to_message.message_id : '';
     
 
     console.log(msg)
