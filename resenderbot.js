@@ -172,7 +172,7 @@ bot.on('message', async (msg) => {
         //обработка сообщений    
         if ((text || '')[0] !== '/' && text) {
 
-            if (fromId.length > 0) {
+            if (fromId !== chatId) {
                 console.log("Сообщение отправлено в группу") 
             } else {
                 console.log("Сообщение отправлено боту") 
