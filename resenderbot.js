@@ -187,6 +187,10 @@ bot.on('message', async (msg) => {
                     console.log('Пользователь добавлен в БД')
                 } else {
                     console.log('Отмена добавления в БД. Пользователь уже существует')
+                    await UserBot.update({ 
+                        groupId: chatId,
+                        group: groupTitle,  
+                    },{where: {id: group.id}})
                 }
             } else {
                 console.log("Сообщение отправлено боту") 
