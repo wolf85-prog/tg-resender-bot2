@@ -172,15 +172,36 @@ bot.on('message', async (msg) => {
         //обработка сообщений    
         if ((text || '')[0] !== '/' && text) {
 
+            if (fromId.length > 0) {
+                console.log("Сообщение отправлено в группу") 
+            } else {
+                console.log("Сообщение отправлено боту") 
+            }
+
             //добавить пользователя в бд
             // const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
             // if (!user) {
             //     await UserBot.create({ 
             //         firstname: firstname, 
             //         lastname: lastname, 
-            //         chatId: fromId, 
-            //         group: groupTitle,
-            //         groupId: chatId,  
+            //         chatId: chatId, 
+            //         group: null,
+            //         groupId: null,  
+            //     })
+            //     console.log('Пользователь добавлен в БД')
+            // } else {
+            //     console.log('Отмена добавления в БД. Пользователь уже существует')
+            // }
+
+            //добавить группы в бд
+            // const group = await UserBot.findOne({where:{groupId: chatId.toString()}})
+            // if (!group) {
+            //     await UserBot.create({ 
+            //         firstname: firstname, 
+            //         lastname: lastname, 
+            //         chatId: chatId, 
+            //         group: null,
+            //         groupId: null,  
             //     })
             //     console.log('Пользователь добавлен в БД')
             // } else {
@@ -192,13 +213,13 @@ bot.on('message', async (msg) => {
             let retext = text2.replace(/(?:@)[\n\S]+/g, 'BitWire Support');
 
             //найти беседу
-            // const exist = await Conversation.findOne({
-            //     where: { 
-            //         members: {
-            //             [Op.contains]: [chatId]
-            //         } 
-            //     },
-            // }) 
+            const exist = await Conversation.findOne({
+                where: { 
+                    members: {
+                        [Op.contains]: [chatId]
+                    } 
+                },
+            }) 
 
             //test
             // if (exist && exist.length !== 0) {
@@ -239,13 +260,13 @@ bot.on('message', async (msg) => {
             //test
             if (chatId.toString() === user1) {
                 const response = await bot.sendMessage(user2, retext)
-                console.log(response)
+                //console.log(response)
                 //сохранить сообщение в базе данных
                 const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
             } 
             else if (chatId.toString() === user2) {
                 const response = await bot.sendMessage(user1, retext)
-                console.log(response)
+                //console.log(response)
                 //сохранить сообщение в базе данных
                 const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
             }
