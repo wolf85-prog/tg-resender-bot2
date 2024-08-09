@@ -241,13 +241,13 @@ bot.on('message', async (msg) => {
                 const response = await bot.sendMessage(user2, retext)
                 console.log(response)
                 //сохранить сообщение в базе данных
-                const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id), replyId)
+                const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
             } 
             else if (chatId.toString() === user2) {
                 const response = await bot.sendMessage(user1, retext)
                 console.log(response)
                 //сохранить сообщение в базе данных
-                const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id), replyId)
+                const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
             }
         }
     } catch (error) {
