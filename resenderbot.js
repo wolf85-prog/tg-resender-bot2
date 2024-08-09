@@ -176,12 +176,17 @@ bot.on('message', async (msg) => {
                 console.log("Сообщение отправлено в группу") 
                 //добавить группу в бд
                 const group = await UserBot.findOne({where:{chatId: fromId.toString()}})
-                if (group) {
-                    console.log('Отмена добавления в БД. Пользователь уже существует')
-                    await UserBot.update({ 
-                        groupId: chatId,
-                        group: groupTitle,  
-                    },{where: {id: group.id}})
+                if (group) {              
+                    if (group.groupId === null) {
+                        await UserBot.update({ 
+                            groupId: chatId,
+                            group: groupTitle,  
+                        },{where: {id: group.id}})
+                       console.log('Пользователь успешно обновлен!') 
+                    }  
+                    else {
+                        console.log('Отмена добавления в БД. Пользователь уже существует')
+                    }             
                 } else {  
                     await UserBot.create({ 
                         firstname: firstname, 
@@ -224,15 +229,21 @@ bot.on('message', async (msg) => {
             }) 
 
             //test
-            // if (exist && exist.length !== 0) {
-            //     console.log('conversation already exist', exist.dataValues.members[0])
+            if (exist && exist.length !== 0) {
+                console.log('conversation already exist', exist.dataValues.members[0])
+                const conv = exist.dataValues.members[0]
 
-            //     if (chatId.toString() === exist.dataValues.members[0].senderId) {
-            //         await bot.sendMessage(exist.dataValues.members[0].receiverId, retext)
-            //     } else if (chatId.toString() === exist.dataValues.members[0].receiverId) {
-            //         await bot.sendMessage(exist.dataValues.members[0].senderId, retext)
-            //     }
-            // }
+                if (chatId.toString() === conv.senderId) {
+                    const response = await bot.sendMessage(conv.receiverId, retext)
+                    //сохранить сообщение в базе данных
+                    const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
+
+                } else if (chatId.toString() === conv.receiverId) {
+                    const response = await bot.sendMessage(conv.senderId, retext)
+                     //сохранить сообщение в базе данных
+                    const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
+                }
+            }
             
 
             //1,2
@@ -260,18 +271,18 @@ bot.on('message', async (msg) => {
             }
 
             //test
-            if (chatId.toString() === user1) {
-                const response = await bot.sendMessage(user2, retext)
-                //console.log(response)
-                //сохранить сообщение в базе данных
-                const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
-            } 
-            else if (chatId.toString() === user2) {
-                const response = await bot.sendMessage(user1, retext)
-                //console.log(response)
-                //сохранить сообщение в базе данных
-                const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
-            }
+            // if (chatId.toString() === user1) {
+            //     const response = await bot.sendMessage(user2, retext)
+            //     //console.log(response)
+            //     //сохранить сообщение в базе данных
+            //     const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
+            // } 
+            // else if (chatId.toString() === user2) {
+            //     const response = await bot.sendMessage(user1, retext)
+            //     //console.log(response)
+            //     //сохранить сообщение в базе данных
+            //     const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
+            // }
         }
     } catch (error) {
         console.log('Произошла непредвиденная ошибка в боте Resender! ', error.message)
