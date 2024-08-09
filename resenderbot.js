@@ -77,8 +77,8 @@ bot.on('message', async (msg) => {
                     firstname: firstname, 
                     lastname: lastname, 
                     chatId: chatId, 
-                    group: null,
-                    groupId: null,  
+                    groupId: null,
+                    group: null,  
                 })
                 console.log('Пользователь добавлен в БД')
             } else {
@@ -174,39 +174,37 @@ bot.on('message', async (msg) => {
 
             if (fromId !== chatId) {
                 console.log("Сообщение отправлено в группу") 
+                //добавить группу в бд
+                const group = await UserBot.findOne({where:{groupId: chatId.toString()}})
+                if (!group) {
+                    await UserBot.create({ 
+                        firstname: firstname, 
+                        lastname: lastname, 
+                        chatId: fromId, 
+                        groupId: chatId,
+                        group: groupTitle,  
+                    })
+                    console.log('Пользователь добавлен в БД')
+                } else {
+                    console.log('Отмена добавления в БД. Пользователь уже существует')
+                }
             } else {
                 console.log("Сообщение отправлено боту") 
+                //добавить пользователя в бд
+                const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
+                if (!user) {
+                    await UserBot.create({ 
+                        firstname: firstname, 
+                        lastname: lastname, 
+                        chatId: chatId, 
+                        groupId: null,
+                        group: null,  
+                    })
+                    console.log('Пользователь добавлен в БД')
+                } else {
+                    console.log('Отмена добавления в БД. Пользователь уже существует')
+                }
             }
-
-            //добавить пользователя в бд
-            // const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
-            // if (!user) {
-            //     await UserBot.create({ 
-            //         firstname: firstname, 
-            //         lastname: lastname, 
-            //         chatId: chatId, 
-            //         group: null,
-            //         groupId: null,  
-            //     })
-            //     console.log('Пользователь добавлен в БД')
-            // } else {
-            //     console.log('Отмена добавления в БД. Пользователь уже существует')
-            // }
-
-            //добавить группы в бд
-            // const group = await UserBot.findOne({where:{groupId: chatId.toString()}})
-            // if (!group) {
-            //     await UserBot.create({ 
-            //         firstname: firstname, 
-            //         lastname: lastname, 
-            //         chatId: chatId, 
-            //         group: null,
-            //         groupId: null,  
-            //     })
-            //     console.log('Пользователь добавлен в БД')
-            // } else {
-            //     console.log('Отмена добавления в БД. Пользователь уже существует')
-            // }
 
             
             let text2 = text.replace(/(?:https?):\/\/t.me[\n\S]+/g, '');
