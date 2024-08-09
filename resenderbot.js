@@ -116,31 +116,55 @@ bot.on('message', async (msg) => {
         //обработка изображений
         if (msg.photo) {
             console.log(msg.photo)
-            //const image = await bot.getFile(msg.photo[msg.photo.length-1].file_id);
-            const image = msg.photo[0].file_id
-            console.log(image)
 
-            if (chatId.toString() === group1) {
-                await bot.sendPhoto(group2, image)
-            } 
-            else if (chatId.toString() === group2) {
-                await bot.sendPhoto(group1, image)
+
+            //найти беседу
+            const exist = await Conversation.findOne({
+                where: { 
+                    members: {
+                        [Op.contains]: [chatId]
+                    } 
+                },
+            }) 
+
+            //test
+            if (exist && exist.length !== 0) {
+                console.log('conversation already exist', exist.dataValues.members)
+
+                const image = msg.photo[0].file_id
+
+                if (chatId.toString() === exist.dataValues.members[0]) {
+                    const response = await bot.sendMessage(exist.dataValues.members[1], image)
+                    //сохранить сообщение в базе данных
+                    const convId = await sendMyMessage(text, "image", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
+
+                } else if (chatId.toString() === exist.dataValues.members[1]) {
+                    const response = await bot.sendMessage(exist.dataValues.members[0], image)
+                     //сохранить сообщение в базе данных
+                    const convId = await sendMyMessage(text, "image", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
+                }
+            } else {
+                if (chatId.toString() === group1) {
+                    await bot.sendPhoto(group2, image)
+                } 
+                else if (chatId.toString() === group2) {
+                    await bot.sendPhoto(group1, image)
+                }
+
+                if (chatId.toString() === group3) {
+                    await bot.sendPhoto(group4, image)
+                } 
+                else if (chatId.toString() === group4) {
+                    await bot.sendPhoto(group3, image)
+                }
+
+                if (chatId.toString() === group5) {
+                    await bot.sendPhoto(group6, image)
+                } 
+                else if (chatId.toString() === group6) {
+                    await bot.sendPhoto(group5, image)
+                }
             }
-
-            if (chatId.toString() === group3) {
-                await bot.sendPhoto(group4, image)
-            } 
-            else if (chatId.toString() === group4) {
-                await bot.sendPhoto(group3, image)
-            }
-
-            if (chatId.toString() === group5) {
-                await bot.sendPhoto(group6, image)
-            } 
-            else if (chatId.toString() === group6) {
-                await bot.sendPhoto(group5, image)
-            }
-
         }
 
         //обработка аудио сообщений
