@@ -234,9 +234,13 @@ bot.on('message', async (msg) => {
             //test
             if (chatId.toString() === user1) {
                 await bot.sendMessage(user2, retext)
+                //сохранить сообщение в базе данных
+                const convId = await sendMyMessage(text, "text", fromId, chatId, parseInt(response.message_id)-1)
             } 
             else if (chatId.toString() === user2) {
                 await bot.sendMessage(user1, retext)
+                //сохранить сообщение в базе данных
+                const convId = await sendMyMessage(text, "text", fromId, chatId, parseInt(response.message_id)-1)
             }
         }
     } catch (error) {
