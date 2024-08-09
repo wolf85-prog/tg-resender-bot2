@@ -175,8 +175,14 @@ bot.on('message', async (msg) => {
             if (fromId !== chatId) {
                 console.log("Сообщение отправлено в группу") 
                 //добавить группу в бд
-                const group = await UserBot.findOne({where:{groupId: chatId.toString()}})
-                if (!group) {
+                const group = await UserBot.findOne({where:{chatId: fromId.toString()}})
+                if (group) {
+                    console.log('Отмена добавления в БД. Пользователь уже существует')
+                    await UserBot.update({ 
+                        groupId: chatId,
+                        group: groupTitle,  
+                    },{where: {id: group.id}})
+                } else {  
                     await UserBot.create({ 
                         firstname: firstname, 
                         lastname: lastname, 
@@ -185,12 +191,6 @@ bot.on('message', async (msg) => {
                         group: groupTitle,  
                     })
                     console.log('Пользователь добавлен в БД')
-                } else {
-                    console.log('Отмена добавления в БД. Пользователь уже существует')
-                    await UserBot.update({ 
-                        groupId: chatId,
-                        group: groupTitle,  
-                    },{where: {id: group.id}})
                 }
             } else {
                 console.log("Сообщение отправлено боту") 
