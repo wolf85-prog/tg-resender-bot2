@@ -4,7 +4,7 @@ const sequelize = require('./../connections/db')
 const {UserBot, Message, Conversation} = require('./../models/models')
 const { Op } = require('sequelize')
 
-module.exports = async function sendMyMessage(text, typeText, chatId, fromId, messageId, replyId) {
+module.exports = async function sendMyMessage(text, typeText, fromId, chatId, title, isBot, messageId, replyId) {
     //создать беседу в админке в бд 
     //сохранить отправленное боту сообщение пользователя в БД
     let  conversation_id              
@@ -21,29 +21,31 @@ module.exports = async function sendMyMessage(text, typeText, chatId, fromId, me
         //console.log("conversation: ", conversation)
 
         //если нет беседы, то создать 
-        // if (!conversation) {
-        //     const conv = await Conversation.create(
-        //     {
-        //         members: [chatId, chatTelegramId],
-        //     })
-        //     console.log("Беседа успешно создана: ", conv) 
-        //     console.log("conversationId: ", conv.id)
+        if (!conversation) {
+            // const conv = await Conversation.create(
+            // {
+            //     members: [chatId, chatTelegramId],
+            // })
+            // console.log("Беседа успешно создана: ", conv) 
+            // console.log("conversationId: ", conv.id)
             
-        //     conversation_id = conv.id
-        // } else {
-        //     console.log('Беседа уже создана в БД')  
-        //     console.log("conversationId: ", conversation.id)  
+            // conversation_id = conv.id
+        } else {
+            console.log('Беседа уже создана в БД')  
+            console.log("conversationId: ", conversation.id)  
             
-        //     conversation_id = conversation.id
-        // }
+            conversation_id = conversation.id
+        }
 
         const messageDB = await Message.create(
         {
             text: text, 
             senderId: fromId, 
-            receiverId: chatId,
+            groupId: chatId,
+            groupTitle: title,
             type: typeText,
-            conversationId: null, //conversation_id,
+            is_bot: isBot,
+            conversationId: conversation_id,
             messageId: messageId,
             replyId: replyId,
         })

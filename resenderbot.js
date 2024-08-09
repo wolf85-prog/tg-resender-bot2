@@ -63,6 +63,7 @@ bot.on('message', async (msg) => {
     const fromId = msg.from ? msg.from.id : '';
     const firstname = msg.from.first_name
     const lastname = msg.from.last_name
+    const replyId = msg.reply_to_message.message_id;
     
 
     console.log(msg)
@@ -240,13 +241,13 @@ bot.on('message', async (msg) => {
                 const response = await bot.sendMessage(user2, retext)
                 console.log(response)
                 //сохранить сообщение в базе данных
-                const convId = await sendMyMessage(text, "text", fromId, chatId, parseInt(response.message_id))
+                const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id), replyId)
             } 
             else if (chatId.toString() === user2) {
                 const response = await bot.sendMessage(user1, retext)
                 console.log(response)
                 //сохранить сообщение в базе данных
-                const convId = await sendMyMessage(text, "text", fromId, chatId, parseInt(response.message_id))
+                const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id), replyId)
             }
         }
     } catch (error) {
