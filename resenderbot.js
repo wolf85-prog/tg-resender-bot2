@@ -39,6 +39,10 @@ const credentials = {
 
 const httpsServer = https.createServer(credentials, app);
 
+
+//function
+const sendMyMessage = require('./common/sendMyMessage')
+
 const user1 = process.env.GROUP12
 const user2 = process.env.GROUP22
 
