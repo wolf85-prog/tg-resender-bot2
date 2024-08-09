@@ -134,12 +134,12 @@ bot.on('message', async (msg) => {
                 const image = msg.photo[0].file_id
 
                 if (chatId.toString() === exist.dataValues.members[0]) {
-                    const response = await bot.sendMessage(exist.dataValues.members[1], image)
+                    const response = await bot.sendPhoto(exist.dataValues.members[1], image)
                     //сохранить сообщение в базе данных
                     const convId = await sendMyMessage(text, "image", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
 
                 } else if (chatId.toString() === exist.dataValues.members[1]) {
-                    const response = await bot.sendMessage(exist.dataValues.members[0], image)
+                    const response = await bot.sendPhoto(exist.dataValues.members[0], image)
                      //сохранить сообщение в базе данных
                     const convId = await sendMyMessage(text, "image", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
                 }
