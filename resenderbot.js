@@ -230,16 +230,15 @@ bot.on('message', async (msg) => {
 
             //test
             if (exist && exist.length !== 0) {
-                console.log('conversation already exist', exist.dataValues.members[0])
-                const conv = exist.dataValues.members[0]
+                console.log('conversation already exist', exist.dataValues.members)
 
-                if (chatId.toString() === conv.senderId) {
-                    const response = await bot.sendMessage(conv.receiverId, retext)
+                if (chatId.toString() === exist.dataValues.members[0]) {
+                    const response = await bot.sendMessage(exist.dataValues.members[1], retext)
                     //сохранить сообщение в базе данных
                     const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
 
-                } else if (chatId.toString() === conv.receiverId) {
-                    const response = await bot.sendMessage(conv.senderId, retext)
+                } else if (chatId.toString() === exist.dataValues.members[1]) {
+                    const response = await bot.sendMessage(exist.dataValues.members[0], retext)
                      //сохранить сообщение в базе данных
                     const convId = await sendMyMessage(text, "text", fromId, chatId, groupTitle, false, parseInt(response.message_id)-1, replyId)
                 }
