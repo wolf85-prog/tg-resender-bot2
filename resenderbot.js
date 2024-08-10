@@ -256,8 +256,6 @@ bot.on('message', async (msg) => {
             if (exist && exist.length !== 0) {
                 console.log('conversation already exist', exist.dataValues.members)
 
-                await bot.sendMessage('-4218852676', retext)
-
                 if (chatId.toString() === exist.dataValues.members[0]) {
                     const response = await bot.sendMessage(exist.dataValues.members[1], retext)
                     //сохранить сообщение в базе данных
