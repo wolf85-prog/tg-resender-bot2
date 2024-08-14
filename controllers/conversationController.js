@@ -7,22 +7,32 @@ class ConversationController {
     async newConversation(req, res) {        
         try {
             console.log(req.body)
-            const arrayData = req.body
+            const {senderId, receiverId} = req.body
 
             //найти беседу
             const exist = await Conversation.findOne({
                 where: { 
                     members: {
-                        [Op.contains]: [arrayData[0]]
+                        [Op.contains]: [senderId]
                     } 
                 },
             }) 
             if (exist && exist.length !== 0) {
-                return res.status(200).json(`conversation already exist`);
+                await Conversation.update({ 
+                    members: exist.dataValues.members.push(receiverId) 
+                },
+                {
+                    where: {
+                        members: {
+                            [Op.contains]: [senderId]
+                        } 
+                    },
+                }) 
+                return res.status(200).json(`conversation update sucessfully`);
             }
 
             await Conversation.create({
-                members: arrayData
+                members: [senderId, receiverId]
             }) 
             return res.status(200).json(`coversation saved sucessfully`)
         } catch (error) {
