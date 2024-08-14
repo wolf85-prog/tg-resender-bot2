@@ -18,16 +18,17 @@ class ConversationController {
                 },
             }) 
             if (exist && exist.length !== 0) {
-                await Conversation.update({ 
-                    members: exist.dataValues.members.push(receiverId) 
-                },
-                {
-                    where: {
-                        members: {
-                            [Op.contains]: [senderId]
-                        } 
-                    },
-                }) 
+                console.log("exist: ", exist)
+                // await Conversation.update({ 
+                //     members: exist.dataValues.members.push(receiverId) 
+                // },
+                // {
+                //     where: {
+                //         members: {
+                //             [Op.contains]: [senderId]
+                //         } 
+                //     },
+                // }) 
                 return res.status(200).json(`conversation update sucessfully`);
             }
 
