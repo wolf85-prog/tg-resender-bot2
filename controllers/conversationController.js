@@ -7,13 +7,13 @@ class ConversationController {
     async newConversation(req, res) {        
         try {
             console.log(req.body)
-            const {senderId, receiverId} = req.body
+            const arrayData = req.body
 
             //найти беседу
             const exist = await Conversation.findOne({
                 where: { 
                     members: {
-                        [Op.contains]: [senderId]
+                        [Op.contains]: [arrayData[0]]
                     } 
                 },
             }) 
@@ -22,7 +22,7 @@ class ConversationController {
             }
 
             await Conversation.create({
-                members: [senderId, receiverId]
+                members: arrayData
             }) 
             return res.status(200).json(`coversation saved sucessfully`)
         } catch (error) {
