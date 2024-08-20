@@ -33,6 +33,7 @@ const Message = sequelize.define('message', {
 
 const Conversation = sequelize.define('conversation', {
     members: {type: DataTypes.ARRAY(DataTypes.STRING)},
+    bot: {type: DataTypes.INTEGER},
 })
 
 
