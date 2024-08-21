@@ -20,7 +20,7 @@ class ConversationController {
             if (exist && exist.length !== 0) {
                 //console.log("exist: ", exist)
                 exist.dataValues.members.push(receiverId) 
-                await Conversation.update({ 
+                await Conversationbot.update({ 
                     members: exist.dataValues.members
                 },
                 {
