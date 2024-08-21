@@ -36,12 +36,15 @@ const Conversation = sequelize.define('conversation', {
     bot: {type: DataTypes.INTEGER},
 })
 
-
+const Conversationbot = sequelize.define('conversationbot', {
+    members: {type: DataTypes.ARRAY(DataTypes.STRING)},
+    bot: {type: DataTypes.INTEGER},
+})
 
 module.exports = {
     User, 
     UserBot, 
     Message, 
-    Conversation, 
+    Conversationbot, 
 
 }

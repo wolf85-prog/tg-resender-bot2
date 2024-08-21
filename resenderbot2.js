@@ -8,7 +8,7 @@ const bot = new TelegramBot(token, {polling: true});
 //подключение к БД PostreSQL
 const sequelize = require('./connections/db')
 const { Op } = require('sequelize')
-const {UserBot, Message, Conversation} = require('./models/models');
+const {UserBot, Message, Conversationbot} = require('./models/models');
 
 const express = require('express');
 const router = require('./routes/index')
@@ -87,7 +87,7 @@ bot.on('message', async (msg) => {
 
 
             //найти беседу
-            const exist = await Conversation.findOne({
+            const exist = await Conversationbot.findOne({
                 where: { 
                     members: {
                         [Op.contains]: [chatId]
@@ -166,7 +166,7 @@ bot.on('message', async (msg) => {
             let retext = text2.replace(/(?:@)[\n\S]+/g, 'BitWire Support');
 
             //найти беседу
-            const exist = await Conversation.findOne({
+            const exist = await Conversationbot.findOne({
                 where: { 
                     members: {
                         [Op.contains]: [chatId]
